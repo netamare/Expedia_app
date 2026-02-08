@@ -12,6 +12,7 @@ class CarSearchScreen extends StatelessWidget {
           Text('Car Rental Search', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
           SizedBox(height: 16),
           TextField(
+
             decoration: InputDecoration(
               prefixIcon: Icon(Icons.place_outlined),
               hintText: 'Pick-up Location',
@@ -41,7 +42,7 @@ class CarSearchScreen extends StatelessWidget {
             ],
           ),
           SizedBox(height: 12),
-          ElevatedButton(onPressed: () {}, child: Text('Search')),
+          ElevatedButton(onPressed: () {}, child: Text('Search Button')),
         ],
       ),
     );
