@@ -1,67 +1,49 @@
 import 'package:flutter/material.dart';
 
-class CarSearchWidget extends StatelessWidget {
+// This is a basic car search screen for demo purposes.
+class CarSearchScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      padding: EdgeInsets.all(22),
-      children: [
-        Card(
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-          child: Padding(
-            padding: EdgeInsets.all(16),
-            child: Column(
-              children: [
-                Text("Car Rental Search", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19)),
-                SizedBox(height: 12),
-                TextField(
-                    decoration: InputDecoration(hintText: "Pick-up Location", prefixIcon: Icon(Icons.place_outlined))),
-                SizedBox(height: 12),
-                Row(
-                  children: [
-                    Expanded(child: TextField(
-                      decoration: InputDecoration(hintText: "Pick-up Date", prefixIcon: Icon(Icons.calendar_today)),
-                    )),
-                    SizedBox(width: 8),
-                    Expanded(child: TextField(
-                      decoration: InputDecoration(hintText: "Drop-off Date", prefixIcon: Icon(Icons.calendar_today)),
-                    )),
-                  ],
-                ),
-                SizedBox(height: 18),
-                ElevatedButton(onPressed: () {}, child: Text("Search")),
-              ],
+    return Scaffold(
+      appBar: AppBar(title: Text('Car Rental Search')),
+      body: ListView(
+        padding: EdgeInsets.all(24),
+        children: [
+          Text('Car Rental Search', style: TextStyle(fontSize: 22, fontWeight: FontWeight.bold)),
+          SizedBox(height: 16),
+          TextField(
+            decoration: InputDecoration(
+              prefixIcon: Icon(Icons.place_outlined),
+              hintText: 'Pick-up Location',
+              border: OutlineInputBorder(borderRadius: BorderRadius.circular(8)),
             ),
           ),
-        ),
-        SizedBox(height: 18),
-        _promoBanner()
-      ],
+          SizedBox(height: 16),
+          Row(
+            children: [
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.calendar_today),
+                      hintText: 'Pick-up Date',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+                ),
+              ),
+              SizedBox(width: 12),
+              Expanded(
+                child: TextField(
+                  decoration: InputDecoration(
+                      prefixIcon: Icon(Icons.calendar_today),
+                      hintText: 'Drop-off Date',
+                      border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
+                ),
+              ),
+            ],
+          ),
+          SizedBox(height: 12),
+          ElevatedButton(onPressed: () {}, child: Text('Search')),
+        ],
+      ),
     );
   }
-
-  Widget _promoBanner() => Container(
-    decoration: BoxDecoration(
-      borderRadius: BorderRadius.circular(7),
-      color: Color(0xFFEFF6FF),
-    ),
-    padding: EdgeInsets.all(19),
-    child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Row(
-          children: [
-            Icon(Icons.local_offer_outlined, color: Colors.blue.shade900),
-            SizedBox(width: 12),
-            Expanded(child: Text("Save on car rentals and packages.", style: TextStyle(fontWeight: FontWeight.bold))),
-          ],
-        ),
-        SizedBox(height:8),
-        GestureDetector(
-          child: Text('See all deals', style: TextStyle(color: Color(0xFF266CFF), fontWeight: FontWeight.w600)),
-          onTap: () {},
-        ),
-      ],
-    ),
-  );
 }
