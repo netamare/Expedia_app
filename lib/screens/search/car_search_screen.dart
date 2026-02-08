@@ -1,95 +1,67 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-// import '../../services/car_service.dart';
-import '../../models/car_rental.dart';
-import '../../services/car_service.dart';
 
-class CarSearchScreen extends StatefulWidget {
-  const CarSearchScreen({Key? key}) : super(key: key);
-  @override
-  _CarSearchScreenState createState() => _CarSearchScreenState();
-}
-
-class _CarSearchScreenState extends State<CarSearchScreen> {
-  late final CarService _service;
-  List<CarRental> _results = [];
-  bool _loading = false;
-  String _query = '';
-
-  @override
-  void didChangeDependencies() {
-    super.didChangeDependencies();
-    // get the CarService provided at the app root
-    _service = Provider.of<CarService>(context);
-  }
-
-  Future<void> _search(String q) async {
-    setState(() {
-      _loading = true;
-      _query = q;
-    });
-    try {
-      final all = await _service.fetchCars();
-      _results = all.where((c) =>
-      c.company.toLowerCase().contains(q.toLowerCase()) ||
-          c.model.toLowerCase().contains(q.toLowerCase())).toList();
-    } catch (_) {
-      _results = [];
-    } finally {
-      setState(() {
-        _loading = false;
-      });
-    }
-  }
-
+class CarSearchWidget extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    // Provide Scaffold so TextField has a Material ancestor when this screen
-    // is used as a route.
-    return Scaffold(
-      appBar: AppBar(title: Text('Search Cars')),
-      body: Column(children: [
-        Padding(
-          padding: const EdgeInsets.all(12.0),
-          child: TextField(
-            decoration: InputDecoration(prefixIcon: Icon(Icons.directions_car), hintText: 'Search car model or company', border: OutlineInputBorder(borderRadius: BorderRadius.circular(8))),
-            onSubmitted: _search,
+    return ListView(
+      padding: EdgeInsets.all(22),
+      children: [
+        Card(
+          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+          child: Padding(
+            padding: EdgeInsets.all(16),
+            child: Column(
+              children: [
+                Text("Car Rental Search", style: TextStyle(fontWeight: FontWeight.bold, fontSize: 19)),
+                SizedBox(height: 12),
+                TextField(
+                    decoration: InputDecoration(hintText: "Pick-up Location", prefixIcon: Icon(Icons.place_outlined))),
+                SizedBox(height: 12),
+                Row(
+                  children: [
+                    Expanded(child: TextField(
+                      decoration: InputDecoration(hintText: "Pick-up Date", prefixIcon: Icon(Icons.calendar_today)),
+                    )),
+                    SizedBox(width: 8),
+                    Expanded(child: TextField(
+                      decoration: InputDecoration(hintText: "Drop-off Date", prefixIcon: Icon(Icons.calendar_today)),
+                    )),
+                  ],
+                ),
+                SizedBox(height: 18),
+                ElevatedButton(onPressed: () {}, child: Text("Search")),
+              ],
+            ),
           ),
         ),
-        Expanded(
-          child: _loading
-              ? Center(child: CircularProgressIndicator())
-              : _results.isEmpty && _query.isNotEmpty
-              ? Center(child: Text('No cars for "$_query"'))
-              : ListView.separated(
-            padding: EdgeInsets.all(12),
-            itemCount: _results.length,
-            separatorBuilder: (_, __) => SizedBox(height: 12),
-            itemBuilder: (context, i) {
-              final c = _results[i];
-              return ListTile(
-                leading: Image.network(
-                  c.imageUrl,
-                  width: 72,
-                  fit: BoxFit.cover,
-                  errorBuilder: (ctx, err, st) => Container(
-                    width: 72,
-                    height: 48,
-                    color: Colors.grey[200],
-                    child: Icon(Icons.directions_car_outlined, color: Colors.grey[600]),
-                  ),
-                ),
-                title: Text('${c.company} — ${c.model}'),
-                subtitle: Text('\$${c.pricePerDay.toStringAsFixed(0)}/day'),
-                trailing: ElevatedButton(
-                  onPressed: () => ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text('Book (fake) ${c.model}'))),
-                  child: Text('Book'),
-                ),
-              );
-            },
-          ),
-        )
-      ]),
+        SizedBox(height: 18),
+        _promoBanner()
+      ],
     );
   }
+
+  Widget _promoBanner() => Container(
+    decoration: BoxDecoration(
+      borderRadius: BorderRadius.circular(7),
+      color: Color(0xFFEFF6FF),
+    ),
+    padding: EdgeInsets.all(19),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          children: [
+            Icon(Icons.local_offer_outlined, color: Colors.blue.shade900),
+            SizedBox(width: 12),
+            Expanded(child: Text("Save on car rentals and packages.", style: TextStyle(fontWeight: FontWeight.bold))),
+          ],
+        ),
+        SizedBox(height:8),
+        GestureDetector(
+          child: Text('See all deals', style: TextStyle(color: Color(0xFF266CFF), fontWeight: FontWeight.w600)),
+          onTap: () {},
+        ),
+      ],
+    ),
+  );
 }
