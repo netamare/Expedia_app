@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:expedia_app/theme/theme_notifier.dart';
 import '../constants/colors.dart';
 
 class AppTheme {
