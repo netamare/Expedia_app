@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../../ data/cities_data.dart';
+import '../../data/cities_data.dart';
 // import '../../data/cities_data.dart';
 
 class CitySearchPage extends StatefulWidget {
