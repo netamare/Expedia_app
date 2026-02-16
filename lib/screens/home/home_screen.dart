@@ -1,6 +1,7 @@
-import 'package:expedia_app/screens/search/car_search_screen.dart';
+// import 'package:expedia_app/screens/search/car_search_screen.dart';
 import 'package:flutter/material.dart';
-import '../flight/expedia_flight_search_tab.dart';
+import '../../models/flight_search_page.dart';
+// import '../flight/expedia_flight_search_tab.dart';
 import '../stays/stays_search_widget.dart';
 // import '../search/car_search_widget.dart';
 import '../packages/packages_search_widget.dart';
@@ -63,8 +64,8 @@ class _HomeScreenState extends State<HomeScreen> with SingleTickerProviderStateM
             controller: _tabController,
             children: [
               StaysSearchWidget(),
-              ExpediaFlightSearchTab(),
-              CarSearchScreen(),
+              FlightSearchPage(),
+              // CarSearchScreen(),
               PackagesSearchWidget(),
             ],
           ),
