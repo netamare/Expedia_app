@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 
-/// Global theme notifier. Default = light.
-/// Update this from any widget: themeNotifier.value = ThemeMode.dark;
-final ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
+// A global ValueNotifier to hold the current ThemeMode
+ValueNotifier<ThemeMode> themeNotifier = ValueNotifier(ThemeMode.light);
+
+// Optional helper to toggle theme
+// void toggleTheme() {
+//   themeNotifier.value == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
+// }
